@@ -13,7 +13,7 @@ NetApp ONTAP FPolicy Add-on for Splunk allows Splunk admins to get File Access N
 
 - **Real-time File Access Monitoring**: Capture file operations (create, modify, delete, access) in real-time
 - **Protocol Support**: Monitor CIFS, NFSv3, and NFSv4.x protocols
-- **SSL/TLS Encryption**: Secure data transmission with TLS 1.2 support (v1.8.1+)
+- **SSL/TLS Encryption**: Secure data transmission with TLS 1.2+ support (v1.8.1+)
 - **Multi-Node Cluster Support**: Connect to up to 8 ONTAP nodes per cluster
 
 ## Table of Contents
@@ -208,6 +208,18 @@ For detailed UCC framework documentation and development guidelines, see:
 
 - [UCC Generator Quickstart](https://splunk.github.io/addonfactory-ucc-generator/quickstart/)
 - [Splunk Add-on UCC Framework Documentation](https://splunk.github.io/addonfactory-ucc-generator/)
+
+---
+
+## Security Considerations
+
+### SSL/TLS for FPolicy Connections
+The add-on supports TLS 1.2+ encryption for connections between NetApp ONTAP and the Splunk add-on server. When SSL is enabled, the connection uses customer-provided certificates for secure communication.
+
+### Splunk SDK SSL Verification
+The bundled Splunk SDK (`splunk-sdk`) uses `verify=False` as the default for SSL connections to the Splunk REST API. This is a known behavior in the upstream Splunk SDK to support backward compatibility with various deployment configurations.
+
+**Risk Assessment: Low** - The SDK connects to the local Splunk instance's REST API (typically `localhost:8089`), limiting exposure to man-in-the-middle attacks. The connection remains encrypted; only certificate verification is disabled.
 
 ---
 

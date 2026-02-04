@@ -226,8 +226,9 @@ class ModInputSERVER_INPUT(base_mi.BaseModInput):
 
             with open(key_file_path, "w") as key_file:
                 key_file.write(sa_key)
-            # define SSL context
-            context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+            # define SSL context with modern TLS settings (TLS 1.2 minimum, supports 1.3)
+            context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+            context.minimum_version = ssl.TLSVersion.TLSv1_2
             context.load_cert_chain(certfile=cert_file_path, keyfile=key_file_path)
 
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0) as sock:
